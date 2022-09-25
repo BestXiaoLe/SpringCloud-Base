@@ -1,0 +1,56 @@
+#服务端口
+server:
+  port: 8000
+  servlet:
+    context-path: /system
+
+spring:
+  application:
+    name: system
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        service: system-serv
+        group: SEATA_GROUP
+      config:
+        server-addr: localhost:8848
+        #表示支持的文件扩展名
+        file-extension: properties
+        refresh-enabled: true
+    sentinel:
+      transport:
+        dashboard: localhost:7070
+  #表示向配置中心索要的生产环境的配置
+  profiles:
+    active: prod
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+
+seata:
+  enabled: true
+  tx-service-group: system-service
+  config:
+    type: nacos
+    nacos:
+      namespace: f04986a1-5e36-4f0e-8ece-cd3530866310
+      server-addr: localhost:8848
+      group: SEATA_GROUP
+      username: "nacos"
+      password: "nacos"
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: localhost:8848
+      group: SEATA_GROUP
+      namespace: f04986a1-5e36-4f0e-8ece-cd3530866310
+      username: "nacos"
+      password: "nacos"
