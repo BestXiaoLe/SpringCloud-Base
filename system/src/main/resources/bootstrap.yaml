@@ -10,11 +10,11 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: nacos.99it.top:80
         service: system-serv
         group: SEATA_GROUP
       config:
-        server-addr: localhost:8848
+        server-addr: nacos.99it.top:80
         #表示支持的文件扩展名
         file-extension: properties
         refresh-enabled: true
@@ -41,16 +41,16 @@ seata:
     type: nacos
     nacos:
       namespace: f04986a1-5e36-4f0e-8ece-cd3530866310
-      server-addr: localhost:8848
+      server-addr: nacos.99it.top:80
       group: SEATA_GROUP
       username: "nacos"
-      password: "nacos"
+      password: "Le253950672Le"
   registry:
     type: nacos
     nacos:
       application: seata-server
-      server-addr: localhost:8848
+      server-addr: nacos.99it.top:80
       group: SEATA_GROUP
       namespace: f04986a1-5e36-4f0e-8ece-cd3530866310
       username: "nacos"
-      password: "nacos"
+      password: "Le253950672Le"
