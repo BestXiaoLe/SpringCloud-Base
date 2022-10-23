@@ -23,7 +23,7 @@ spring:
         dashboard: localhost:7070
   #表示向配置中心索要的生产环境的配置
   profiles:
-    active: prod
+    active: local
 
 management:
   endpoints:
@@ -54,3 +54,6 @@ seata:
       namespace: f04986a1-5e36-4f0e-8ece-cd3530866310
       username: "nacos"
       password: "Le253950672Le"
+canal:
+  server: 127.0.0.1:11111
+  destination: example
