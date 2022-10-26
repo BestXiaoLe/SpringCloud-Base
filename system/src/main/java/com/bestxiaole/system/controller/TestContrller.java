@@ -1,6 +1,7 @@
 package com.bestxiaole.system.controller;
 
 import com.bestxiaole.server.pojo.User;
+import com.bestxiaole.server.service.AdService;
 import com.bestxiaole.server.service.UserService;
 import com.bestxiaole.server.utils.RedisOperator;
 import io.seata.spring.annotation.GlobalTransactional;
@@ -21,6 +22,9 @@ public class TestContrller {
 
     @Autowired
     private RedisOperator redisOperator;
+
+    @Autowired
+    private AdService adService;
 
     @Resource
     private UserService userService;
@@ -58,5 +62,11 @@ public class TestContrller {
         redisOperator.set("name", uniqueToken, 1000 * 60 * 30);
         String getRedis = redisOperator.get("name");
         return getRedis;
+    }
+
+    @RequestMapping("/setredis")
+    public String setredis() {
+        adService.setAdListRedis();
+        return "Ok";
     }
 }

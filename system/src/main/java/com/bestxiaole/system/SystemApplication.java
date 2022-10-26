@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -51,6 +52,8 @@ public class SystemApplication {
         template.setConnectionFactory(redisConnectionFactory);
         //采用普通的key为 字符串
         template.setKeySerializer(new StringRedisSerializer());
+        //设置默认序列化方式Json
+        template.setValueSerializer(RedisSerializer.json());
         return template;
     }
 
