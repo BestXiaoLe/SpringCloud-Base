@@ -5,6 +5,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.util.Date;
+
 /**
  * @Document 用来声明ES索引信息
  * indexName 索引名称
@@ -16,7 +18,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 public class UserInfo {
 
     @Id
-    private Integer id;
+    private String id;
     @Field(type = FieldType.Keyword)
     private String name;
     //type : 字段数据类型
@@ -25,28 +27,44 @@ public class UserInfo {
     @Field(type = FieldType.Text, analyzer = "ik_max_word", index = true)
     private String address;
 
-    public UserInfo(Integer id, String name, String address) {
+    private Date creat_time;
+
+    public UserInfo(String id, String name, String address, Date creat_time) {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.creat_time = creat_time;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
-    public void setId(Integer id) {
+
+    public void setId(String id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Date getCreat_time() {
+        return creat_time;
+    }
+
+    public void setCreat_time(Date creat_time) {
+        this.creat_time = creat_time;
     }
 }

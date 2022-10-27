@@ -1,5 +1,6 @@
 package com.bestxiaole.system.controller;
 
+import com.bestxiaole.server.service.ElasticsearchRestService;
 import com.bestxiaole.server.vo.UserInfo;
 import io.netty.util.internal.StringUtil;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,15 +30,24 @@ public class EsController {
     @Autowired
     private ElasticsearchRestTemplate template;
 
+    @Autowired
+    private ElasticsearchRestService elasticsearchRestService;
+
     @RequestMapping("/set")
     public void setes() {
         List<UserInfo> list = new ArrayList<>();
-        for (int i = 10001; i < 15000; i++) {
+        for (int i = 0; i < 100; i++) {
+            Date date = new Date();
             String name = (char) (0x4e00 + (int) (Math.random() * (0x9fa5 - 0x4e00 + 1))) + "" + (char) (0x4e00 + (int) (Math.random() * (0x9fa5 - 0x4e00 + 1)));
-            list.add(new UserInfo(i, name + "二", "北京市"));
+            list.add(new UserInfo(String.valueOf(i), name + "二", "北京市", date));
         }
         Iterable iterable = template.save(list);
         System.out.println(iterable);
+    }
+
+    @RequestMapping("/setone")
+    public void setten() throws InterruptedException {
+        elasticsearchRestService.setListEs();
     }
 
     @RequestMapping("/getpage")
@@ -45,7 +56,7 @@ public class EsController {
 //        int pageNo=1;//设置第几页
 //        int pageSize = 100;// 设置每页数据量
 
-        FieldSortBuilder sortBuilder = new FieldSortBuilder("id").order(SortOrder.ASC);//排序
+        FieldSortBuilder sortBuilder = new FieldSortBuilder("name.keyword").order(SortOrder.ASC);//排序
         NativeSearchQuery nativeSearchQuery = null;
         if (StringUtil.isNullOrEmpty(keyWord) || keyWord.equals("")) {
             MatchAllQueryBuilder queryBuilder = QueryBuilders.matchAllQuery();//条件
